@@ -5,6 +5,6 @@ from typing import Optional
 class NewsModel(BaseModel):
     title: str
     source: str
-    description: str
     media: str
     timestamp: datetime
+    finetuned:str

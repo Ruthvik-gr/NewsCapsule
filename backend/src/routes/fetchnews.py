@@ -20,12 +20,13 @@ async def fetch_and_store_news():
             description=entry.summary,
             media=entry.media_content[0]["url"] if "media_content" in entry else None,
             timestamp=datetime.utcnow(),
+            finetuned="n"
         )
 
         # Insert into MongoDB if the title does not already exist
         existing = await news_collection.find_one({"title": news_data.title})
         if not existing:
-            await news_collection.insert_one(news_data.dict())  # ✅ Convert to dict
+            await news_collection.insert_one(news_data.model_dump()) 
             print(f"✅ Stored: {news_data.title}")
         else:
             print(f"⚠️ Skipped (Already Exists): {news_data.title}")
