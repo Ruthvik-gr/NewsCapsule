@@ -4,10 +4,13 @@ import feedparser
 from datetime import datetime
 from src.mongodb.models import NewsModel  # ✅ Import the Pydantic model
 from src.mongodb.database import news_collection  # ✅ Import MongoDB collection
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+RSS_URL = os.environ["RSS_URL"]
 
 router = APIRouter()
-RSS_URL = "https://www.firstpost.com/commonfeeds/v1/mfp/rss/health.xml"
-
 async def fetch_and_store_news():
     """Fetch RSS feed data and store it in MongoDB"""
     print("🔄 Fetching RSS news feed...")

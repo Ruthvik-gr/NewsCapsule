@@ -18,7 +18,10 @@ async def process_unprocessed_news():
                 print("Processing source URL:", source_url)
 
                 title, description = process_url(source_url)
+                title = title.strip('{}')  # Remove curly brackets
+                description = description.strip('{}')  # Remove curly brackets
                 # Validate processed result
+                
                 if title and description:
                     print({"title": title, "description": description})
 
