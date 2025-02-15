@@ -28,7 +28,11 @@ def process_url(source_url):
             [
                 (
                     "system",
-                    "Give the title and description only in json format: The title must be strictly within 8 words, and the description must be strictly within 60 words:\n\n{context}",
+                    "Only Give the title and description in {{title ||| description}} format "
+                    "The title must be strictly within 8-10 words, and the description must be strictly within 50-60 words.\n\n"
+                    "Example format: {{title ||| description}}\n\n"
+                    "Dont give extra explaination or information just give the result as specfied in Example format"
+                    "{context}"
                 )
             ]
         )
@@ -40,11 +44,20 @@ def process_url(source_url):
         result = chain.invoke({"context": docs})
 
         # Validate result
-        if isinstance(result, dict) and "title" in result and "description" in result:
-            return result
+        if isinstance(result, str) and "|||" in result:
+            parts = result.split("|||", 1)  # Split into two parts at the first occurrence of "|||"
+            title = parts[0].strip()
+            description = parts[1].strip()
+
+            if not title:
+                title = "Unknown Title"
+            if not description:
+                description = "Description not available"
+            return {title,description}
         else:
-            print("Unexpected result format:", result)
-            return {"title": "Unknown", "description": "Processing failed"}
+            # print(result)
+            return {"title": "Unknown Title", "description": "Processing failed"}
+
 
     except Exception as e:
         print("Error processing URL:", str(e))
@@ -52,5 +65,5 @@ def process_url(source_url):
 
 
 # Test Example
-result = process_url("https://www.firstpost.com/tech/google-ai-boss-casts-doubts-on-deepseeks-efficiency-claims-calls-them-exaggerated-and-misleading-13862031.html")
-print(result)
+# result = process_url("https://www.firstpost.com/tech/google-ai-boss-casts-doubts-on-deepseeks-efficiency-claims-calls-them-exaggerated-and-misleading-13862031.html")
+# print(result)
