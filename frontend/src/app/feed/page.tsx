@@ -52,17 +52,17 @@ const Page: React.FC = () => {
                 { threshold: 1.0 }
             );
 
-            if (node) observer.current.observe(node); 
+            if (node) observer.current.observe(node);
         },
-        [loading, fetchNews] 
+        [loading, fetchNews]
     );
-                                                                 
+
     useEffect(() => {
         fetchNews();
     }, []); // Initial fetch
 
     return (
-        <div className="flex pt-20 flex-col items-center min-h-screen bg-black p-4">
+        <div className="flex pt-24 flex-col items-center min-h-screen bg-[#022439] p-4">
             <div className="w-full max-w-md space-y-4">
                 {news.map((item, index) => (
                     <div

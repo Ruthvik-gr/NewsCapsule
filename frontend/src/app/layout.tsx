@@ -30,7 +30,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <Navbar />
+          <Navbar className="bg-[#022439] rounded-xl" />
           {children}
         </body>
       </SessionWrapper>
