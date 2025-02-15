@@ -17,8 +17,12 @@ export function Navbar({ className }: { className?: string }) {
         >
             <Menu setActive={setActive}>
                 <HoveredLink href="/">Home</HoveredLink>
-                {!session ? (<HoveredLink href="/auth">Login</HoveredLink>) : (<HoveredLink href="/" onClick={() => { signOut({ callbackUrl: '/' }); }}>Sign out</HoveredLink>
-                )}
+                {!session ? (<HoveredLink href="/auth">Login</HoveredLink>) :
+                    (<>
+                        <HoveredLink href="/feed">Feed</HoveredLink>
+                        <HoveredLink href="/" onClick={() => { signOut({ callbackUrl: '/' }); }}>Sign out</HoveredLink>
+                    </>
+                    )}
             </Menu>
         </div>
     );

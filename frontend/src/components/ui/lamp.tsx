@@ -2,8 +2,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { FlipWords } from "../ui/flip-words";
 
-export default function LampDemo() {
+interface LampDemoProps {
+  firstword?: string;
+  words?: string[];
+  lastwords?: string;
+}
+
+export default function LampDemo({ firstword, words, lastwords }: LampDemoProps) {
+
   return (
     <LampContainer>
       <motion.h1
@@ -16,7 +24,13 @@ export default function LampDemo() {
         }}
         className="mt-200 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
       >
-        Read News<br /> the right way
+        <div className="flex justify-center items-center px-4">
+          <div className="text-4xl mx-auto font-normal text-neutral-900 dark:text-neutral-400">
+            {firstword}
+            <FlipWords className="text-white" words={words || []} /> <br />
+            {lastwords}
+          </div>
+        </div>
       </motion.h1>
     </LampContainer>
   );

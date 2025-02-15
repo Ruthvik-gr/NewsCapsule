@@ -1,16 +1,88 @@
-"use client"
-const Page = () => {
+"use client";
+import { useState, useEffect, useRef, useCallback } from "react";
+
+interface NewsItem {
+    _id: string;
+    media: string;
+    title: string;
+    description: string;
+}
+
+const Page: React.FC = () => {
+    const [news, setNews] = useState<NewsItem[]>([]);
+    const [page, setPage] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    const observer = useRef<IntersectionObserver | null>(null);
+
+    // Fetch news data from API
+    const fetchNews = useCallback(async () => {
+        if (!hasMore) return;
+        setLoading(true);
+
+        try {
+            const res = await fetch(`/api/news?page=${page}`);
+            const data: NewsItem[] = await res.json();
+
+            if (data.length === 0) {
+                setHasMore(false);
+            } else {
+                setNews((prev) => [...prev, ...data]);
+                setPage((prev) => prev + 1);
+            }
+        } catch (error) {
+            console.error("Error fetching news:", error);
+        }
+
+        setLoading(false);
+    }, [page, hasMore]);
+
+    // Intersection Observer for infinite scrolling
+    const lastNewsRef = useCallback(
+        (node: HTMLDivElement | null) => {
+            if (loading) return;
+            if (observer.current) observer.current.disconnect();
+
+            observer.current = new IntersectionObserver(
+                (entries) => {
+                    if (entries[0].isIntersecting) {
+                        fetchNews();
+                    }
+                },
+                { threshold: 1.0 }
+            );
+
+            if (node) observer.current.observe(node); 
+        },
+        [loading, fetchNews] 
+    );
+                                                                 
+    useEffect(() => {
+        fetchNews();
+    }, []); // Initial fetch
+
     return (
-        <div className='flex items-center justify-center min-h-screen bg-black p-4'>
-            <div className='w-full max-w-md bg-white text-black p-6 rounded-2xl shadow-lg overflow-y-auto max-h-screen h-full'>
-                <h2 className='text-2xl font-bold mb-4'>Feed Title</h2>
-                <p className='text-sm pr-2'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet nunc vehicula, pellentesque erat id, mollis velit. Integer eu felis non arcu aliquam dictum. Nulla facilisi. Sed faucibus dolor non tortor pulvinar, nec tincidunt nulla tristique.
-                    <br /><br />
-                    Aenean ut lorem non nunc sollicitudin vehicula ac ut turpis. Ut fringilla mauris nec arcu laoreet, sed facilisis mi fringilla. Duis tincidunt, lorem a malesuada tempor, odio justo venenatis sapien, eu interdum nisi libero a purus.
-                    <br /><br />
-                    Cras nec ligula vel metus malesuada suscipit non sit amet lorem. Vivamus suscipit vestibulum mauris, in ultricies magna facilisis id. Integer nec volutpat libero. Nam fringilla consequat odio, id pharetra purus malesuada et.
-                </p>
+        <div className="flex pt-20 flex-col items-center min-h-screen bg-black p-4">
+            <div className="w-full max-w-md space-y-4">
+                {news.map((item, index) => (
+                    <div
+                        key={item._id}
+                        ref={index === news.length - 1 ? lastNewsRef : null}
+                        className="bg-white text-black p-4 rounded-2xl shadow-lg"
+                    >
+                        <img
+                            src={item.media}
+                            alt={item.title}
+                            className="w-full h-48 object-cover rounded-lg"
+                            loading="lazy"
+                        />
+                        <h3 className="text-lg font-semibold mt-2">{item.title}</h3>
+                        <p className="text-sm text-gray-700 mt-1">{item.description}</p>
+                    </div>
+                ))}
+
+                {loading && <p className="text-white text-center">Loading...</p>}
+                {!hasMore && <p className="text-white text-center">No more news</p>}
             </div>
         </div>
     );
