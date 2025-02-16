@@ -5,7 +5,7 @@ interface NewsItem {
     _id: string;
     media: string;
     title: string;
-    description: string;
+    summary: string;
 }
 
 const Page: React.FC = () => {
@@ -77,7 +77,7 @@ const Page: React.FC = () => {
                             loading="lazy"
                         />
                         <h3 className="text-lg font-semibold mt-2">{item.title}</h3>
-                        <p className="text-sm text-gray-700 mt-1">{item.description}</p>
+                        <p className="text-sm text-gray-700 mt-1">{item.summary}</p>
                     </div>
                 ))}
 

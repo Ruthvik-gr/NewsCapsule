@@ -11,7 +11,7 @@ load_dotenv()
 
 
 def process_url(source_url):
-    """Fetches and processes a URL to extract title and description."""
+    """Fetches and processes a URL to extract description only."""
     try:
         loader = WebBaseLoader(source_url)
         docs = loader.load()
@@ -28,12 +28,7 @@ def process_url(source_url):
             [
                 (
                     "system",
-                    "You are a top-tier news channel known for compelling headlines and engaging summaries. Use your best copywriting skills to craft attention-grabbing news titles and concise, impactful descriptions.\n\n"
-                    "Only provide the response in {{title ||| description}} format.\n"
-                    "The title must be strictly within 8-10 words, and the description must be strictly within 50-60 words.\n\n"
-                    "Example format: {{title ||| description}}\n\n"
-                    "Do not add extra explanations or information—just provide the result as specified.\n\n"
-                    "{context}",
+                    "You are a top-tier news channel known for compelling summaries. Use your best copywriting skills to craft concise, impactful descriptions. Provide only the summary strictly within 50-60 words, without additional formatting, quotation marks, or explanations.{context}"
                 ),
             ]
         )
@@ -45,25 +40,17 @@ def process_url(source_url):
         result = chain.invoke({"context": docs})
 
         # Validate result
-        if isinstance(result, str) and "|||" in result:
-            parts = result.split(
-                "|||", 1
-            )  # Split into two parts at the first occurrence of "|||"
-            title = parts[0].strip()
-            description = parts[1].strip()
-
-            if not title:
-                title = "Unknown Title"
+        if isinstance(result, str):
+            description = result.strip()
             if not description:
-                description = "Description not available"
-            return {title, description}
+                return "Description not available"  # Return a string directly
+            return description  # Return the description string directly
         else:
-            # print(result)
-            return {"title": "Unknown Title", "description": "Processing failed"}
+            return "Processing failed"  # Return a string for failure
 
     except Exception as e:
         print("Error processing URL:", str(e))
-        return {"title": "Error", "description": "Could not fetch data"}
+        return "Could not fetch data"  # Return a string for error
 
 
 # Test Example

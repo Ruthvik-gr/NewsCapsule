@@ -22,10 +22,10 @@ export default function LampDemo({ firstword, words, lastwords }: LampDemoProps)
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="mt-200 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+        className="mt-240 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
       >
-        <div className="flex justify-center items-center px-4">
-          <div className="text-4xl mx-auto font-normal text-neutral-900 dark:text-neutral-400">
+        <div className="flex justify-center items-center p-0">
+          <div className="text-4xl mx-auto font-normal text-white dark:text-neutral-400">
             {firstword}
             <FlipWords className="text-white" words={words || []} /> <br />
             {lastwords}

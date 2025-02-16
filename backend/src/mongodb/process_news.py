@@ -15,22 +15,15 @@ async def process_unprocessed_news():
             try:
                 source_url = article["source"]
                 # source_url = "https://www.firstpost.com/tech/google-ai-boss-casts-doubts-on-deepseeks-efficiency-claims-calls-them-exaggerated-and-misleading-13862031.html"
-                print("Processing source URL:", source_url)
-
-                title, description = process_url(source_url)
-                title = title.strip('{}')  # Remove curly brackets
-                description = description.strip('{}')  # Remove curly brackets
+                # Get only the description
+                description = process_url(source_url)  # Call process_url
                 # Validate processed result
-                
-                if title and description:
-                    print({"title": title, "description": description})
-
-                    news_collection.update_one(
+                if description:
+                    result = await news_collection.update_one(
                         {"_id": article["_id"]},
                         {
                             "$set": {
-                                "title": title,
-                                "description": description,
+                                "summary": description,  # Store as summary
                                 "finetuned": "y",
                             }
                         },
