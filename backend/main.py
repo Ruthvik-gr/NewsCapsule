@@ -14,13 +14,21 @@ app = FastAPI(
 @app.get("/")
 async def root():
     print("Root endpoint hit")
-    result = await connect_db()
-    print(f"MongoDB connection result: {result}")
-    return result
+    try:
+        await client.admin.command('ping')
+        print("✅ Connected to MongoDB successfully!")
+        return {"message": "FastAPI with MongoDB is working! ✅"}
+    except Exception as e:
+        print(f"❌ Failed to connect to MongoDB: {e}")
+    
 
 
 # Include the news routes
 app.include_router(news_router)
 
 
-# c
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     """Lifespan event handler for startup and shutdown"""
+#     yield  # Application runs here
+#     shutdown()  # Cleanup when FastAPI stops
