@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Yatra_One, Fredoka } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import SessionWrapper from "../components/sessionWrapper"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const yatraOne = Yatra_One({
+  weight: "400",
+  variable: "--font-yatra-one",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fredoka = Fredoka({
+  weight: "400",
+  variable: "--font-fredoka",
   subsets: ["latin"],
 });
 
@@ -46,7 +48,7 @@ export default function RootLayout({
     <html lang="en">
       <SessionWrapper>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${yatraOne.variable} ${fredoka.variable} antialiased`}
         >
           <Navbar className="bg-[#022439] rounded-xl" />
           {children}
