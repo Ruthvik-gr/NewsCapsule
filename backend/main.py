@@ -18,15 +18,6 @@ async def root():
     print(f"MongoDB connection result: {result}")
     return result
 
-@app.get("/test-db")
-async def test_db():
-    try:
-        # Try to ping the database
-        await client.admin.command('ping')
-        return {"message": "MongoDB connection is successful"}
-    except Exception as e:
-        return {"error": f"Failed to connect to MongoDB: {str(e)}"}
-
 
 # Include the news routes
 app.include_router(news_router)
