@@ -13,9 +13,10 @@ app = FastAPI(
 
 @app.get("/")
 async def root():
-    result = await connect_db()  # Attempt to connect to MongoDB
+    print("Root endpoint hit")
+    result = await connect_db()
+    print(f"MongoDB connection result: {result}")
     return result
-
 
 @app.get("/test-db")
 async def test_db():
