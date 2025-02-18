@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from src.mongodb.database import connect_db
-from src.routes.fetchnews import router as news_router  
-from src.routes.fetchnews import shutdown 
-from contextlib import asynccontextmanager 
+from src.routes.fetchnews import router as news_router
+from src.routes.fetchnews import shutdown
+from contextlib import asynccontextmanager
 
 app = FastAPI(
     title="News Agent app",
@@ -10,13 +10,18 @@ app = FastAPI(
 )
 
 
+# @app.get("/")
+# async def root():
+#     try:
+#         return await connect_db()  # Attempt to connect to the database
+#     except Exception as e:
+#         # If connection fails, catch the error and return a helpful message
+#         return {"error": f"Failed to connect to MongoDB: {str(e)}"}
+
+
 @app.get("/")
 async def root():
-    try:
-        return await connect_db()  # Attempt to connect to the database
-    except Exception as e:
-        # If connection fails, catch the error and return a helpful message
-        return {"error": f"Failed to connect to MongoDB: {str(e)}"}
+    return {"message": "FastAPI is working on Vercel!"}
 
 
 # Include the news routes
