@@ -9,13 +9,20 @@ app = FastAPI(
     title="News Agent app",
     summary="A Simple application to get the rss feed and fine tune it withh llm's and show a short.",
 )
-
-
+    
 @app.get("/")
 async def root():
     return {"message": "Hello from FastAPI on Vercel!"}
 
-    
+@app.get("/testdb")
+async def root():
+    try:
+        return await connect_db()  # Attempt to connect to the database
+    except Exception as e:
+        # If connection fails, catch the error and return a helpful message
+        return {"error": f"Failed to connect to MongoDB: {str(e)}"}
+
+
 
 # Include the news routes
 app.include_router(news_router)
