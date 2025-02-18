@@ -28,8 +28,8 @@ async def root():
 app.include_router(news_router)
 
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     """Lifespan event handler for startup and shutdown"""
-#     yield  # Application runs here
-#     shutdown()  # Cleanup when FastAPI stops
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan event handler for startup and shutdown"""
+    yield  # Application runs here
+    shutdown()  # Cleanup when FastAPI stops
