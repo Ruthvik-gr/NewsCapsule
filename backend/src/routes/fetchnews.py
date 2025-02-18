@@ -100,7 +100,7 @@ def call_fetch_and_store_news():
 # Schedule the task to run every day at 6:00 AM
 scheduler.add_job(
     call_fetch_and_store_news,  # Call the sync wrapper instead of the async function directly
-    CronTrigger(hour=18, minute=34),  # Run at 6:00 AM every day
+    CronTrigger(hour=18, minute=38),  # Run at 6:00 AM every day
     id="daily_news_fetch",
     replace_existing=True
 )
