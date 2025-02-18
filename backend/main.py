@@ -13,10 +13,8 @@ app = FastAPI(
 
 @app.get("/")
 async def root():
-    print("Root endpoint hit")
-    await client.admin.command('ping')
-    print("✅ Connected to MongoDB successfully!")
-    return {"message": "FastAPI with MongoDB is working! ✅"}
+    return {"message": "Hello from FastAPI on Vercel!"}
+
     
 
 # Include the news routes
