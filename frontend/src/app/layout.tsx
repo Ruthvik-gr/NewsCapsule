@@ -1,20 +1,15 @@
 import type { Metadata } from "next";
-import { Yatra_One, Fredoka } from "next/font/google";
+import { Inconsolata } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import SessionWrapper from "../components/sessionWrapper"
 
-const yatraOne = Yatra_One({
+const inconsolata = Inconsolata({
   weight: "400",
-  variable: "--font-yatra-one",
+  variable: "--font-inconsolata",
   subsets: ["latin"],
 });
 
-const fredoka = Fredoka({
-  weight: "400",
-  variable: "--font-fredoka",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   applicationName: "News Capsule",
@@ -48,7 +43,7 @@ export default function RootLayout({
     <html lang="en">
       <SessionWrapper>
         <body
-          className={`${yatraOne.variable} ${fredoka.variable} antialiased`}
+          className={` ${inconsolata.variable} antialiased`}
         >
           <Navbar className="bg-[#022439] rounded-xl" />
           {children}

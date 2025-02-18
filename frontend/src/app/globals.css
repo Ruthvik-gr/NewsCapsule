@@ -1,6 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --font-inconsolata: "Inconsolata", monospace;
+}
+
+body {
+  font-family: var(--font-inconsolata);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-inconsolata);
+}
+
 /* @layer base {
   :root {
     --background: 0 0% 100%;
