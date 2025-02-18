@@ -14,14 +14,10 @@ app = FastAPI(
 @app.get("/")
 async def root():
     print("Root endpoint hit")
-    try:
-        await client.admin.command('ping')
-        print("✅ Connected to MongoDB successfully!")
-        return {"message": "FastAPI with MongoDB is working! ✅"}
-    except Exception as e:
-        print(f"❌ Failed to connect to MongoDB: {e}")
+    await client.admin.command('ping')
+    print("✅ Connected to MongoDB successfully!")
+    return {"message": "FastAPI with MongoDB is working! ✅"}
     
-
 
 # Include the news routes
 app.include_router(news_router)
