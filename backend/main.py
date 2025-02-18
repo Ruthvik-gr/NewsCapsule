@@ -12,7 +12,11 @@ app = FastAPI(
 
 @app.get("/")
 async def root():
-    return await connect_db()
+    try:
+        return await connect_db()  # Attempt to connect to the database
+    except Exception as e:
+        # If connection fails, catch the error and return a helpful message
+        return {"error": f"Failed to connect to MongoDB: {str(e)}"}
 
 
 # Include the news routes
