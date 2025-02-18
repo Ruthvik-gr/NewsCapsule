@@ -11,13 +11,10 @@ app = FastAPI(
 )
 
 
-# @app.get("/")
-# async def root():
-#     try:
-#         return await connect_db()  # Attempt to connect to the database
-#     except Exception as e:
-#         # If connection fails, catch the error and return a helpful message
-#         return {"error": f"Failed to connect to MongoDB: {str(e)}"}
+@app.get("/")
+async def root():
+    result = await connect_db()  # Attempt to connect to MongoDB
+    return result
 
 
 @app.get("/test-db")
