@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from src.mongodb.database import connect_db
 from src.routes.fetchnews import router as news_router
-from contextlib import asynccontextmanager
+from src.routes.deleteoldnews import router as deleteoldnews 
 from src.routes.process_news import router as processrouter
 
 app = FastAPI(
@@ -27,3 +27,4 @@ async def root():
 # Include the news routes
 app.include_router(news_router)
 app.include_router(processrouter)
+app.include_router(deleteoldnews)
