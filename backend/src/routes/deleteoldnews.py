@@ -3,7 +3,6 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime, timedelta
 import pytz
 from fastapi import APIRouter
-import os
 from dotenv import load_dotenv
 from src.mongodb.database import news_collection
 
