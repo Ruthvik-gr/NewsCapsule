@@ -41,6 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head><meta name="google-site-verification" content="_JOLkDNnFGSg_Yn__hoJdlf_gr74eRFz5n1a7O4XtMA" /></head>
       <SessionWrapper>
         <body
           className={` ${inconsolata.variable} antialiased`}
