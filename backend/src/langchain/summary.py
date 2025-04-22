@@ -5,6 +5,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.llm import LLMChain
 from langchain_core.prompts import ChatPromptTemplate
 import os
+from langchain.chat_models import init_chat_model
 
 os.environ["USER_AGENT"] = "newscapsule/1.0"
 load_dotenv()
@@ -19,11 +20,8 @@ def process_url(source_url):
         if "GROQ_API_KEY" not in os.environ:
             os.environ["GROQ_API_KEY"] = getpass.getpass("Enter API key for Groq: ")
 
-        from langchain.chat_models import init_chat_model
-
         llm = init_chat_model("llama3-8b-8192", model_provider="groq")
 
-        # Define prompt
         prompt = ChatPromptTemplate.from_messages(
             [
                 (

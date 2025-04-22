@@ -10,6 +10,6 @@ cd backend
 .\Scripts\activate
 uvicorn main:app --reload
 
-delete-news - to delete news
+/delete-news - to delete news
 fetch-news - to fetch news and store in db without llm process
 process-news - to process the fetched news
