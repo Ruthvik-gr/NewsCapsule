@@ -51,7 +51,3 @@
 - Connected through FastAPI backend
 
 ---
-
-## 🚀 Getting Started
-
----
